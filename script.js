@@ -1,28 +1,3 @@
-class Patron{
-    constructor(name, password, id){
-        this.name = name;
-        this.password = password;
-        this.id = id;
-    }
-
-    equals(other){
-        if(!(other instanceof Patron)){
-            return false;
-        }
-        if(other.name !== this.name || other.password !== this.password || other.id !== this.id){
-            return false;
-        }
-        return true;
-    }
-}
-
-let patronDB = [new Patron("Dale Schofield", "Passw0rd", 56420000),
-                new Patron("John Doe", "pAnc4ke", 87654321),
-                new Patron("Alice Smith", "pAnda44", 84561894),
-                new Patron("Bert Wallace", "CinnaM0n", 46464646),
-                new Patron("Herb Green", "sQuid16", 78912364),
-                new Patron("Shelly Waters", "merMaid1", 51379468)];
-
 function hasCapital(word){
     let letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
     for(let i = 0; i<word.length; i++){
@@ -54,78 +29,93 @@ function toggleEmail(checkbox){
     emailbox.required = checkbox.checked;
 }
 
-function verify(name, password, id){
-    let tempPatron = new Patron(name, password, id);
+function validate(form){
+    let name = form.name.value;
+    let password = form.password.value;
+    let id = form.id.value;
+    let email = form.email.value;
+    let emailRequested = form.emailConf.checked;
 
-    for(let i =0; i<patronDB.length; i++){
-        if(patronDB[i].equals(tempPatron)){
-            let selections = document.getElementById("transactionType");
-            alert("Welcome! You have entered into the system to "+selections.options[selections.selectedIndex].text);
-            return true;
-        }
-    }
-
-    alert("Patron not in DB!");
-    return false;
-}
-
-function validate(){
-    let name = document.getElementById("name").value;
-    let password = document.getElementById("password").value;
-    let id = document.getElementById("id").value;
-    let email = document.getElementById("email").value;
-    let emailRequested = document.getElementById("emailConf").checked;
-
-    if(name.length<=0){
-        alert("Please enter a name!");
-        return;
-    }
-    else if(password.length<=0){
-        alert("Please enter a password!");
-        return;
-    }
-    else if(id===""){
-        alert("Please enter an ID!");
-        return;
-    }
-    else if(emailRequested && email===""){
+    if(emailRequested && email===""){
         alert("Please enter an email!");
-        return;
+        return false;
     }
     else if(password.length>8){
         alert("Password must be 8 or less characters!");
-        return;
+        return false;
     }
     else if(!hasCapital(password)){
         alert("Password must have at least one capital letter!");
-        return;
+        return false;
     }
     else if(!hasNumber(password)){
         alert("Password must have at least one number!");
-        return;
+        return false;
     }
     else if(id.length !== 8){
         alert("ID must be 8 digits!");
-        return;
+        return false;
     }
     else if(hasCapital(id.toUpperCase())){
         alert("ID must be only numbers!");
-        return;
+        return false;
     }
     else if(emailRequested) {
         if (email.length < 5 || !email.includes("@") || !email.includes(".")) {
             alert("Please enter a valid email!");
-            return;
+            return false;
         }
         else if(email.split("@").length>2 || email.split(".").length>2){
             alert("Please enter a valid email!");
-            return;
+            return false;
         }
         else if(!email.split("@")[1].includes(".")){
             alert("Please enter a valid email!");
-            return;
+            return false;
         }
     }
 
-    verify(name, password, parseInt(id));
+    return true;
+}
+
+function validate_registration(form){
+    let name = form.name.value;
+    let password = form.password.value;
+    let id = form.id.value;
+    let email = form.email.value;
+
+    if(password.length>8){
+        alert("Password must be 8 or less characters!");
+        return false;
+    }
+    else if(!hasCapital(password)){
+        alert("Password must have at least one capital letter!");
+        return false;
+    }
+    else if(!hasNumber(password)){
+        alert("Password must have at least one number!");
+        return false;
+    }
+    else if(id.length !== 8){
+        alert("ID must be 8 digits!");
+        return false;
+    }
+    else if(hasCapital(id.toUpperCase())){
+        alert("ID must be only numbers!");
+        return false;
+    }
+    else if (email.length < 5 || !email.includes("@") || !email.includes(".")) {
+        alert("Please enter a valid email!");
+        return false;
+    }
+    else if(email.split("@").length>2 || email.split(".").length>2){
+        alert("Please enter a valid email!");
+        return false;
+    }
+    else if(!email.split("@")[1].includes(".")){
+        alert("Please enter a valid email!");
+        return false;
+    }
+
+    return true;
 }
