@@ -1,0 +1,45 @@
+# Don't track content of these folders
+.vs/
+Backup/
+ipch/
+ReleaseAXP/
+ctf/
+debug/
+game/
+ref_gl/
+ref_soft/
+release/
+
+
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.so
+
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Misc. #
+#########
+*.vcxproj
+*.filters
+*.opensdf
+*.sdf
+*.suo
+UpgradeLog.htm
+.idea/
