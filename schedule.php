@@ -1,6 +1,6 @@
 <head>
     <meta charset="UTF-8">
-    <title>Smiles Galore Registration</title>
+    <title>Smiles Galore Scheduling</title>
     <script src="script.js"></script>
     <style>
         body{

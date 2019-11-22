@@ -79,11 +79,11 @@
 <body>
     <form id="form" onsubmit="return validate(this)" action="index.php" method="post">
         Name:<br>
-        <input type="text" id="name" name="name" value="Shaunna Carr" required><br>
+        <input type="text" id="name" name="name" required><br>
         Password:<br>
-        <input type="password" id="password" name="password" maxlength="8" value="8hJJeX92" required><br>
+        <input type="password" id="password" name="password" maxlength="8" required><br>
         Patron ID:<br>
-        <input type="number" id="id" size="8" name="id" value="10000001" required><br>
+        <input type="number" id="id" size="8" name="id" required><br>
         Email confirmation:
         <input type="checkbox" id="emailConf" name="emailConf" onclick="toggleEmail(this)"><br>
         Email:<br>
