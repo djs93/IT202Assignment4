@@ -66,44 +66,24 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     else{
         print("<h1>Account Creation Successful!</h1>");
-        $query = "SELECT * from IT202_Patient";
-        $beforeCount = mysqli_num_rows(mysqli_query($db, $query));
+        $query = "SELECT * from IT202_Patient where ID=$id";
+        $result = mysqli_query($db, $query);
+        $beforeCount = mysqli_num_rows($result);
+        print("Rows before insertion: $beforeCount<br>");
+        printTable($result);
 
         $query = "INSERT INTO IT202_Patient(ID, Patient_Name, Password, Email) VALUES ('$id', '$name', '$password', '$email')";
         mysqli_query($db, $query);
         print(mysqli_error($db));
 
-        $query = "SELECT * from IT202_Patient";
-        $afterCount = mysqli_num_rows(mysqli_query($db, $query));
-
         $query = "SELECT * from IT202_Patient where ID=$id";
         $result = mysqli_query($db, $query);
+        $afterCount = mysqli_num_rows(mysqli_query($db, $query));
 
-        print("Rows before insertion: $beforeCount<br>");
-        print("Rows after insertion: $afterCount<br><br>");
-        print("Row inserted:<br>");
-        print "<table>";
-        print "<tr align = 'center'>";
-        $num_rows = mysqli_num_rows($result);
-        if ($num_rows > 0) {
-            $row = mysqli_fetch_assoc($result);
-            $num_fields = mysqli_num_fields($result);// Produce the column labels
-            $keys = array_keys($row);
-            for ($index = 0; $index < $num_fields; $index++)
-                print "<th>" . $keys[$index] . "</th>";
-            print "</tr>";// Output the values of the fields in the rows
-            for ($row_num = 0; $row_num < $num_rows; $row_num++) {
-                print "<tr>";
-                $values = array_values($row);
-                for ($index = 0; $index < $num_fields; $index++) {
-                    $value = htmlspecialchars($values[$index]);
-                    print "<td>" . $value . "</td>";
-                }
-                print "</tr>";
-                $row = mysqli_fetch_assoc($result);
-            }
-        }
-        print "</table>";
+
+        print("<br>Rows after insertion: $afterCount<br>");
+        printTable($result);
+
         //store number of users in db before
         //insert user into database
         //store number after

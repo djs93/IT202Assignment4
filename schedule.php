@@ -1,6 +1,3 @@
-<?php
-include("config.php");
-?>
 <head>
     <meta charset="UTF-8">
     <title>Smiles Galore Registration</title>
@@ -35,18 +32,55 @@ include("config.php");
     </style>
 </head>
 <body>
-    <form>
+    <?php
+    include("config.php");
+    session_start();
+    if($_SERVER["REQUEST_METHOD"] == "POST") {
+        //Insert data as appointment
+        //Match names to ids to insert
+        $id = $_SESSION['id'];
+
+        $procType = (int)$_POST['appointType']+1;
+
+        $dentID = (int)$_POST['dentist']+1;
+
+        $date = $_POST['date'];
+        $time = $_POST['time'];
+
+        $formattedDateTime = $date." ".$time.":00";
+
+        $query = "SELECT * from IT202_Patient_Procedures where Patient_ID=$id";
+        $result = mysqli_query($db, $query);
+        $beforeCount = mysqli_num_rows($result);
+        print("Rows before insertion: $beforeCount<br>");
+        printTable($result);
+
+        $query = "INSERT INTO IT202_Patient_Procedures(Patient_ID, ProcedureType, Dentist, Time) values ('$id', '$procType', '$dentID','$formattedDateTime')";
+        mysqli_query($db, $query);
+        print(mysqli_error($db));
+
+        $query = "SELECT * from IT202_Patient_Procedures where Patient_ID=$id";
+        $result = mysqli_query($db, $query);
+        $afterCount = mysqli_num_rows(mysqli_query($db, $query));
+
+
+        print("<br>Rows after insertion: $afterCount<br>");
+        printTable($result);
+        exit;
+    }
+    ?>
+    <form method="post">
         <label>
             Date:
-            <input type="date" id="date" name="date"><br>
+            <input type="date" id="date" name="date" required><br>
         </label>
         <label>
             Time:
-            <input type="time" id="time" name="time"><br>
+            <input type="time" id="time" name="time" required><br>
         </label>
         <label>
             Appointment Type:
-            <select id="appointType" name="appointType">
+            <select id="appointType" name="appointType" required>
                 <!--Do php population-->
                 <?php
                 //Procedure dropdown
@@ -72,13 +106,24 @@ include("config.php");
         </label>
         <label>
             Dentist:
-            <select id="dentist" name="dentist">
+            <select id="dentist" name="dentist" required>
                 <!--Do php population-->
-                <option>Temp</option>
                 <?php
-                //Procedure dropdown
-                //Get procedure entries from database
-                //Populate dropdown selections with
+                $query = "SELECT Dentist_Name from IT202_Dentist_Names";
+                $result = mysqli_query($db, $query);
+                $num_rows = mysqli_num_rows($result);
+                if ($num_rows > 0) {
+                    $row = mysqli_fetch_assoc($result);
+                    $keys = array_keys($row);
+                    for ($row_num = 0; $row_num < $num_rows; $row_num++) {
+                        print "<option value='$row_num+1'>";
+                        $values = array_values($row);
+                        $value = htmlspecialchars($values[0]);
+                        print "$value";
+                        print "</option>";
+                        $row = mysqli_fetch_assoc($result);
+                    }
+                }
                 ?>
             </select><br>
         </label>
