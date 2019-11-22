@@ -14,17 +14,20 @@
             border-radius: 4px;
             box-sizing: border-box;
         }
-        input[type=submit]{
+        input[type=submit] {
             background-color: #80ecee;
             padding: 14px 20px;
             margin: 8px 0;
             border: none;
             border-radius: 4px;
             cursor: pointer;
+        }
         td, th {border: thin solid black;}
         table {
-            align: center;
-            border: thin solid black;}
+            alignment: center;
+            border: thin solid black;
+            margin-left: auto;
+            margin-right: auto;
         }
     </style>
 </head>
@@ -52,15 +55,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $res1 = mysqli_query($db, $query);
     $countName = mysqli_num_rows($res1);
 
-
     $query = "SELECT * from IT202_Patient where ID=$id";
     $res2 = mysqli_query($db, $query);
     $countID = mysqli_num_rows($res2);
     if($countName>0){
-        print("Email already in system!</br>");
+        print("Email already in system!<br>");
     }
     else if($countID>0){
-        print("ID already in system!</br>");
+        print("ID already in system!<br>");
     }
     else{
         print("<h1>Account Creation Successful!</h1>");
@@ -77,9 +79,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         $query = "SELECT * from IT202_Patient where ID=$id";
         $result = mysqli_query($db, $query);
 
-        print("Rows before insertion: $beforeCount</br>");
-        print("Rows after insertion: $afterCount</br>");
-        print("Row inserted:</br>");
+        print("Rows before insertion: $beforeCount<br>");
+        print("Rows after insertion: $afterCount<br><br>");
+        print("Row inserted:<br>");
         print "<table>";
         print "<tr align = 'center'>";
         $num_rows = mysqli_num_rows($result);
@@ -116,15 +118,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 <form id="form" onsubmit="return validate_registration(this)" action="" method="post">
-    Name:</br>
-    <input type="text" id="name" name="name" value="<?php print($name);?>" required></br>
-    Password:</br>
-    <input type="password" id="password" name="password" maxlength="8" value="<?php print($password);?>" required></br>
-    Patron ID:</br>
-    <input type="number" id="id" size="8" name="id" value="<?php print($id);?>" required></br>
-    Email:</br>
-    <input type="text" id="email" name="email" value="<?php print($email);?>" required></br></br>
-    <input type="submit" id="submit" name="submit" value="Register"></br>
+    Name:<br>
+    <input type="text" id="name" name="name" value="<?php print($name);?>" required><br>
+    Password:<br>
+    <input type="password" id="password" name="password" maxlength="8" value="<?php print($password);?>" required><br>
+    Patron ID:<br>
+    <input type="number" id="id" size="8" name="id" value="<?php print($id);?>" required><br>
+    Email:<br>
+    <input type="text" id="email" name="email" value="<?php print($email);?>" required><br><br>
+    <input type="submit" id="submit" name="submit" value="Register"><br>
 </form>
 
 <p>
